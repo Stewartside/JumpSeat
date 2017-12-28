@@ -194,7 +194,7 @@ li.aero-helper-dropable {
 	width:310px;
 	top:0;
 	right:-310px;
-	z-index:2147483647;
+	z-index:9999999;
 }
 .aero-sidebar.open {
 	right:-50px;
@@ -1358,23 +1358,18 @@ a.aicon-role:hover span, .aero-menu-active a.aicon-role span { background-positi
 }
 
 .aero-overlay {
-    top: -9999px;
-    position: fixed;
-    height: 100%;
-    width: 100%;
-    background: #565656;
     display: block;
-    z-index: 99999;
-    top: 0;
-    left: 0;
-    -ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=50)";
-    filter: alpha(opacity=50);
-    -moz-opacity:0.5;
-    -khtml-opacity: 0.5;
-    opacity: 0.6;
-    outline:none;
+	clip-path: url(#clipArea); 
+	position: absolute; 
+	top: 0; 
+	left: 0; 
+	height: 100vh; 
+	width: 100vw;
+	z-index: 9999; 
+	background: black; 
+	opacity: 0.6;
 }
-.ae-active-el.el-spotlight {
+/*.ae-active-el.el-spotlight {
     position:relative;
     z-index:999999;
 }
@@ -1382,7 +1377,7 @@ a.aicon-role:hover span, .aero-menu-active a.aicon-role span { background-positi
     position:absolute;
     z-index: 999995;
     border-radius: 5px;
-}
+}*/
 
 /* Front */
 .aero-tip-draggable {

@@ -79,31 +79,28 @@ Aero.tip = {
      */
     spotlight : function($tip, step){
 
-        var $el, $tpl, sWidth, sHeight, offSet;
+         var $el, $window, $svg, $pos;
 
-        //Append Relative CSS
+
         $el = $q(step.loc);
-        $el.addClass('el-spotlight');
+        $window = {height: window.innerHeight, width: window.innerWidth};
 
-        //Add minus padding 10
-        sWidth = $el.outerWidth() + 10;
-        sHeight = $el.outerHeight() + 10;
-        offSet = $el.offset();
+        var baseHeight = 1 / $window.height;
+        var baseWidth = 1 / $window.width;
 
-        //Append Overlay
-        $tpl = $q('<div class="aero-remove aero-overlay"></div>');
-        $q('body').append($tpl);
+        $pos = $el.offset();
+        $pos.tl = {top: baseHeight * $pos.top, left: baseWidth * $pos.left };
+        $pos.tr = {top: baseHeight * $pos.top, left: baseWidth * ($pos.left + $el.innerWidth())};
+        $pos.br = {top: baseHeight * ($pos.top + $el.innerHeight()), left: baseWidth * ($pos.left + $el.innerWidth())};
+        $pos.bl = {top: baseHeight * ($pos.top + $el.innerHeight()), left: baseWidth *$pos.left};
 
-        //Append Spotlight
-        $tpl = $q('<div />')
-                .addClass('aero-remove aero-light')
-                .css({
-                width : sWidth,
-                height : sHeight,
-                top : offSet.top - 5,
-                left: offSet.left - 5
-            });
-        $q('body').append($tpl);
+
+        $svg = '<svg width="0" height="0" class="aero-remove"><defs><clipPath id="clipArea" clipPathUnits="objectBoundingBox">';
+        $svg += '<path d="M0,0 L1,0 L1,1 L0,1 L'+$pos.bl.left+','+$pos.bl.top+' L'+$pos.br.left+','+$pos.br.top+' L'+$pos.tr.left+','+$pos.tr.top+' L'+$pos.tl.left+','+$pos.tl.top+'  L'+$pos.bl.left+','+$pos.bl.top+' L0,1" />';
+        $svg += '</clipPath></defs></svg>';
+        
+        $q('body').append($svg);
+        $q('body').append('<div class="aero-remove aero-overlay"></div>');
     },
 
 	/**
