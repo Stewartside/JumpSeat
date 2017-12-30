@@ -31,6 +31,8 @@ JumpSeat currently supports the following browsers:
  3. Chrome
  4. Safari
 
+----
+
 #### LICENSE
 
 JumpSeat is released under the GNU Affero General Public License. This Free Software Foundation license is fairly new, and thus we wanted to talk about how this license differs from GPL.
