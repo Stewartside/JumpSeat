@@ -137,9 +137,10 @@ class PathwayMap_Model extends CI_Model
                         if(!$admin && !$create && !$guide['active'])
                             unset($pathway_map[$key]);
                         else
-                            $pathway = $guide;
+							$pathway = $guide;
+							$username = isset($_SESSION['username']) ? $_SESSION['username'] : 'guest';
 
-                            $pathway['progress']   = $this->analytics_model->get_progress($_SESSION['username'], $guide['id']);
+                            $pathway['progress']   = $this->analytics_model->get_progress($username, $guide['id']);
                             $pathway['test'] = $guide['id'];
                             $pathway['guideid'] = $guide['id'];
                     }

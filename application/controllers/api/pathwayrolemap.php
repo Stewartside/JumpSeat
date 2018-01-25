@@ -49,7 +49,7 @@ class PathwayRoleMap extends REST_Controller
 
     	//All guides
     	$guides = $this->pathwayrolemap_model->get_by_role($this->get('roleid'));
-
+		
     	//Get user
     	$this->load->library('person', array('host' => $this->host));
     	$acl = $this->person->acl;
@@ -59,10 +59,8 @@ class PathwayRoleMap extends REST_Controller
     	foreach($guides as $guide)
     	{
     		$id = $guide['id'];
-    		$title = $guide['title'];
-    		$desc = $guide['description'];
-
-    		$tools = "<div class='tools' style='width:115px'; data-id='$id'>";
+			$tools = "<div class='tools' style='width:115px'; data-id='$id'>";
+			
     		//Permission
     		if($acl['pathways']['assignRole']){
     			$tools .= "<a class='small button alert delete'>Delete <i class='ss-icon'>&#xE0D0;</i></a>";
@@ -71,9 +69,9 @@ class PathwayRoleMap extends REST_Controller
 
     		$row = array(
     				"<input type='checkbox' class='select' value='1' data-id='$id' />",
-    				$title,
-    				$desc,
-    				2,
+    				$guide['title'],
+    				$guide['description'],
+    				$guide['count'],
     				$tools
     		);
 

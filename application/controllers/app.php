@@ -177,6 +177,9 @@ class App extends CI_Controller {
 
     private function teatime()
     {
+        $_SESSION['license'] = 'Enterprise';
+        return;
+        
         $this->load->config('config', TRUE);
         $_SESSION['license'] = 'Community';
 

@@ -27,9 +27,12 @@ class User_Model extends CI_Model
 			->where(array('email' => $username))
 			->get($this->collection);
 
-        if(sizeof($user) <= 0) return 1;
+        if(sizeof($user) <= 0) {
+            //Username not found
+            return 1;
+        }
         if(isset($user[0]['failedtries'])){
-            if($user[0]['failedtries'] > 3) {
+            if($user[0]['failedtries'] > 5) {
 
                 return 2;
             }

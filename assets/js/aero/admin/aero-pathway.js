@@ -14,7 +14,7 @@ Aero.pathways = {
         if(!Aero.constants.PATHWAYS){
             Aero.send("api/pathway", {}, function(r){
                 Aero.constants.PATHWAYS = r;
-                callback(r)
+                callback(r);
             }, "GET");
         }else{
             callback(Aero.constants.PATHWAYS);

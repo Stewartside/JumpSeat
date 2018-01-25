@@ -79,9 +79,14 @@ Aero.view.pathway = {
 				var index = ls ? ls : 0;
 
 				//Navigate
-				if(isPrev) index--; else index++;
-				if(index < 0) index = size;
-				if(index > size) index = 0;
+				if(isPrev){ 
+                    index--; 
+                } else { 
+                    index++;
+                }
+
+				if(index < 0) index = 0;
+				if(index > size) index = size;
 
 				self.render(r, index);
 			});
@@ -178,19 +183,17 @@ Aero.onpage = {
         var mycallback = callback;
 
         Aero.guide.getAll(function(guides){
-
+            var appUrl = AeroStep.getSubURL(window.location.pathname);
+            
             for(var i in guides){
                 var step = guides[i].step[0];
 
                 if(step){
-
                     //Don't use first step orphans
                     if(step.position && step.position == "orphan"){
                         step = guides[i].step[1];
                     }
-
-                    if(step.loc == "body") break;
-                    if(step.noUrl == "all" || step.url == AeroStep.getSubURL(window.location.pathname)){
+                    if(step.loc != "body" && step.noUrl == "all" || step.url == appUrl || (!step.url && appUrl == '/')){
                         onPage.push(guides[i]);
                     }
                 }

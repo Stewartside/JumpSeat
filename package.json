@@ -1,0 +1,22 @@
+{
+  "name": "jumpseat",
+  "version": "1.9.9",
+  "description": "JumpSeat Training and Support",
+  "homepage": "http://jumpseat.io",
+  "author": "TenSpeed Technologies Inc.",
+  "repository": "10SPD/JumpSeat",
+  "license": "AGPL",
+  "engines": {
+    "node": ">= 0.10"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "gulp-concat": "^2.6.1",
+    "gulp-minify": "^2.1.0",
+    "gulp-minify-css": "^1.2.4",
+    "gulp-rename": "^1.2.2",
+    "gulp-uglify": "^3.0.0",
+    "gulp-util": "^3.0.8",
+    "gulp-watch": "^5.0.0"
+  }
+}

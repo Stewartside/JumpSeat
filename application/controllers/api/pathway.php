@@ -34,12 +34,13 @@ class Pathway extends REST_Controller
     	$select = $this->input->get('select') ? $this->input->get('select') : array();
 
     	if($id){
-			$pathway = $this->pathway_model->get_by_id($id);
+            $pathway = $this->pathway_model->get_by_id($id);
 		}elseif($title){
 			$pathway = $this->pathway_model->get_by_title($title);
 		}else{
-    		$pathway = $this->pathway_model->get_all($select, $count, $dropEmpty);
-		}
+            $pathway = $this->pathway_model->get_all($select, $count, $dropEmpty);
+        }
+        
     	$this->response($pathway, 200);
     }
 

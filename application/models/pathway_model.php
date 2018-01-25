@@ -62,6 +62,7 @@ class Pathway_Model extends CI_Model
 	*/
 	public function get_all($select = array(), $count = false, $dropEmpty = false)
 	{
+		$myPathways = array();
 		$order = array('title' => 'ASC');
 		$where = array();
 		$i = 0;
@@ -74,30 +75,26 @@ class Pathway_Model extends CI_Model
 			->get($this->collection);
 
 		//Get guide count
-		if($count)
+		foreach($pathways as &$pathway)
 		{
-			foreach($pathways as &$pathway)
-			{
-				$this->load->model('pathwaymap_model', '', FALSE, $this->host);
-				$size = $this->pathwaymap_model->count_guides($pathway['id']);
+			$this->load->model('pathwaymap_model', '', FALSE, $this->host);
+			$size = $this->pathwaymap_model->count_guides($pathway['id']);
+			$pathway['guides'] = $size;
 
-				//Drop empty?
-//				if($dropEmpty){
-//					if($size == 0) unset($pathways[$i]);
-//				}else{
-					$pathway['guides'] = $size;
-//				}
-
-				if(!$this->has_access($pathway['id'])){
-					unset($pathways[$i]);
-                    $pathways = array_values($pathways);
+			if($dropEmpty){
+				if ($size > 0 && $this->has_access($pathway['id'])){
+					array_push($myPathways, $pathway);
 				}
-
-				$i++;
+			} else {
+				
+				if ($this->has_access($pathway['id'])){
+					array_push($myPathways, $pathway);
+				}
 			}
+			$i++;
 		}
 
-		return $pathways;
+		return $myPathways;
 	}
 
 	/**

@@ -390,7 +390,6 @@ Aero.guide = {
             if (end) Aero.tip.sayCongrats();
 
             self.getAll(function (guides) {
-
                 aeroStorage.getItem('aero:session', function (ls) {
 
                     var hasLink = Aero.utils.getUrlParam('guideid');

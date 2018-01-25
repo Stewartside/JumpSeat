@@ -7,6 +7,7 @@ class PathwayRoleMap_Model extends CI_Model
 	private $collection = null;
 	private $role_collection = null;
 	private $pathway_collection = null;
+	private $pathway_guide = null;
 	private $host = null;
 
 	/**
@@ -25,6 +26,7 @@ class PathwayRoleMap_Model extends CI_Model
 		$this->collection = $host . "_" . PATHWAYROLE;
 		$this->role_collection = $host . "_" . ROLES;
 		$this->pathway_collection = $host . "_" . PATHWAY;
+		$this->pathway_guide = $host . "_" . PATHWAYGUIDE;
 	}
 	
 	
@@ -96,14 +98,28 @@ class PathwayRoleMap_Model extends CI_Model
 			->get($this->collection);
 
 		if(sizeof($pathway_map) > 0){
-			foreach ($pathway_map as $pathway){
-				array_push($whereIds, array('_id' => new MongoId($pathway['pathwayid'])));
+			foreach ($pathway_map as $p){
+				if(isset($p['pathwayid']) && $p['pathwayid'] != ""){
+					array_push($whereIds, array('_id' => new MongoId($p['pathwayid'])));
+				}
 			}
 
 			$pathways = $this->mongo_db
 				->select(array('title', 'description'))
 				->orWhere($whereIds)
 				->get($this->pathway_collection);
+
+			if(sizeof($pathways) > 0){
+				foreach ($pathways as &$pathway){
+					$guideCount = $this->mongo_db
+						->select(array('guideid'))
+						->orderBy(array('index' => "ASC"))
+						->where(array('pathwayid' => $pathway['id']))
+						->get($this->pathway_guide);
+				
+					$pathway['count'] = sizeof($guideCount);
+				}
+			}
 		}
 
 		return $pathways;
